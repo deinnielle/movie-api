@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Api.Data;
 using Api.Models;
 
@@ -14,24 +15,25 @@ namespace Api.Services
             _context = context;
         }
         
-        public List<Movie> GetAllMoviesService()
+        public async Task<List<Movie>> GetAllMoviesService()
         {
             return _context.Items.ToList();
         }
         
-        public Movie GetMovieByIdService(int id)
+        public async Task<Movie> GetMovieByIdService(int id)
         {
             return _context.Items.FirstOrDefault(m => m.Id == id);
         }
 
-        public List<Movie> AddMovieService(Movie newMovie)
+        public async Task<List<Movie>> AddMovieService(Movie newMovie)
         {
             _context.Add(newMovie);
             _context.SaveChanges();
+            
             return _context.Items.ToList();;
         }
 
-        public Movie UpdateMovieService(int id, Movie updateMovie)
+        public async Task<Movie> UpdateMovieService(int id, Movie updateMovie)
         {
             Movie movie = _context.Items.FirstOrDefault(m => m.Id == id);
             movie.Title = updateMovie.Title;
@@ -42,7 +44,7 @@ namespace Api.Services
             return _context.Items.FirstOrDefault(m => m.Id == id);
         }
         
-        public Movie DeleteMovieService(int id)
+        public async Task<Movie> DeleteMovieService(int id)
         {
             Movie movie = _context.Items.First(m => m.Id == id);
             Movie deletedMovie = movie;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Api.Models;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,33 +19,33 @@ namespace Api.Controllers
         }
         
         [Route("/")]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAllMovies()
         {
-            return Ok(_movieService.GetAllMoviesService());
+            return Ok(await _movieService.GetAllMoviesService());
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetSingle(int id)
+        public async Task<IActionResult> GetMovieById(int id)
         {
-            return Ok(_movieService.GetMovieByIdService(id));
+            return Ok(await _movieService.GetMovieByIdService(id));
         }
         
         [HttpPost]
-        public IActionResult AddMovie(Movie newMovie)
+        public async Task<IActionResult> AddMovie(Movie newMovie)
         {
-            return Ok(_movieService.AddMovieService(newMovie));
+            return Ok(await _movieService.AddMovieService(newMovie));
         }
         
         [HttpPut("{id}")]
-        public IActionResult UpdateMovie(int id, Movie updateMovie)
+        public async Task<IActionResult> UpdateMovie(int id, Movie updateMovie)
         {
-            return Ok(_movieService.UpdateMovieService(id, updateMovie));
+            return Ok(await _movieService.UpdateMovieService(id, updateMovie));
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteMovie(int id)
+        public async Task<IActionResult> DeleteMovie(int id)
         {
-            return Ok(_movieService.DeleteMovieService(id));
+            return Ok(await _movieService.DeleteMovieService(id));
         }
     }
 }
