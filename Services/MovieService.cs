@@ -1,30 +1,55 @@
 using System.Collections.Generic;
 using System.Linq;
+using Api.Data;
 using Api.Models;
 
 namespace Api.Services
 {
     public class MovieService : IMovieService
     {
-        private static List<Movie> movies = new List<Movie> {
-            new Movie(),
-            new Movie { Id = 1, Title = "Parasite", Rating = 9.9, Genre = "Comedy"}
-        };
+        private readonly ApplicationDbContext _context;
+
+        public MovieService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         
-        public List<Movie> GetAllMovies()
+        public List<Movie> GetAllMoviesService()
         {
-            return movies;
+            return _context.Items.ToList();
+        }
+        
+        public Movie GetMovieByIdService(int id)
+        {
+            return _context.Items.FirstOrDefault(m => m.Id == id);
         }
 
-        public Movie GetMovieById(int id)
+        public List<Movie> AddMovieService(Movie newMovie)
         {
-            return movies.FirstOrDefault(c => c.Id == id);
+            _context.Add(newMovie);
+            _context.SaveChanges();
+            return _context.Items.ToList();;
         }
 
-        public List<Movie> AddMovie(Movie newMovie)
+        public Movie UpdateMovieService(int id, Movie updateMovie)
         {
-            movies.Add(newMovie);
-            return movies;
+            Movie movie = _context.Items.FirstOrDefault(m => m.Id == id);
+            movie.Title = updateMovie.Title;
+            movie.Rating = updateMovie.Rating;
+            movie.Genre = updateMovie.Genre;
+            _context.SaveChanges();
+            
+            return _context.Items.FirstOrDefault(m => m.Id == id);
+        }
+        
+        public Movie DeleteMovieService(int id)
+        {
+            Movie movie = _context.Items.First(m => m.Id == id);
+            Movie deletedMovie = movie;
+            _context.Remove(movie);
+            _context.SaveChanges();
+            
+            return deletedMovie;
         }
     }
 }

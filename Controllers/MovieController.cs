@@ -11,29 +11,40 @@ namespace Api.Controllers
     public class MovieController : ControllerBase
     {
         private readonly IMovieService _movieService;
-        // private static Movie movie = new Movie();
 
         public MovieController(IMovieService movieService)
         {
             _movieService = movieService;
         }
         
-        [Route("movies")]
+        [Route("/")]
         public IActionResult Get()
         {
-            return Ok(_movieService.GetAllMovies());
+            return Ok(_movieService.GetAllMoviesService());
         }
         
-        [HttpGet("movie/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetSingle(int id)
         {
-            return Ok(_movieService.GetMovieById(id));
+            return Ok(_movieService.GetMovieByIdService(id));
         }
         
         [HttpPost]
         public IActionResult AddMovie(Movie newMovie)
         {
-            return Ok(_movieService.AddMovie(newMovie));
+            return Ok(_movieService.AddMovieService(newMovie));
+        }
+        
+        [HttpPut("{id}")]
+        public IActionResult UpdateMovie(int id, Movie updateMovie)
+        {
+            return Ok(_movieService.UpdateMovieService(id, updateMovie));
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMovie(int id)
+        {
+            return Ok(_movieService.DeleteMovieService(id));
         }
     }
 }
