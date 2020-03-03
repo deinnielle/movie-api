@@ -27,8 +27,8 @@ namespace Api.Services
 
         public async Task<List<Movie>> AddMovieService(Movie newMovie)
         {
-            _context.Add(newMovie);
-            _context.SaveChanges();
+            await _context.AddAsync(newMovie);
+            await _context.SaveChangesAsync();
             
             return _context.Items.ToList();;
         }
@@ -39,7 +39,7 @@ namespace Api.Services
             movie.Title = updateMovie.Title;
             movie.Rating = updateMovie.Rating;
             movie.Genre = updateMovie.Genre;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
             return _context.Items.FirstOrDefault(m => m.Id == id);
         }
@@ -49,7 +49,7 @@ namespace Api.Services
             Movie movie = _context.Items.First(m => m.Id == id);
             Movie deletedMovie = movie;
             _context.Remove(movie);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
             return deletedMovie;
         }
