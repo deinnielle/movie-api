@@ -3,8 +3,8 @@ Built in ASP.NET Core and SQL
 
 ## Install
 ```
-$ git clone https://github.com/deinnielle/movie-api.git
-$ cd movie-api
+$ git clone https://github.com/deinnielle/rest-api.git
+$ cd rest-api
 $ dotnet restore
 $ dotnet run
 ```
