@@ -5,5 +5,6 @@ Built in ASP.NET Core and SQL
 ```
 $ git clone https://github.com/deinnielle/movie-api.git
 $ cd movie-api
+$ dotnet restore
 $ dotnet run
 ```
