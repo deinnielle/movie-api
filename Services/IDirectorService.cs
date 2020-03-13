@@ -6,10 +6,9 @@ namespace Api.Services
 {
     public interface IDirectorService
     {
-        /*Task<List<Movie>> GetAllMoviesService();
-        Task<Movie> GetMovieByIdService(int id);*/
+        Task<List<Director>> GetAllDirectorsService();
+        Task<Director> GetDirectorByIdService(int id);
         Task<List<Director>> AddDirectorService(Director newDirector);
-        // Task<Movie> UpdateMovieService(int id, Movie updateMovie);
-        // Task<Movie> DeleteMovieService(int id);
+        Task<Director> UpdateDirectorService(int id, Director updateDirector);
     }
 }

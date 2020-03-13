@@ -14,13 +14,33 @@ namespace Api.Services
         {
             _context = context;
         }
-        
+
+        public async Task<List<Director>> GetAllDirectorsService()
+        {
+            return _context.Director.ToList();
+        }
+
+        public async Task<Director> GetDirectorByIdService(int id)
+        {
+            return _context.Director.FirstOrDefault(d => d.Id == id);
+        }
+
         public async Task<List<Director>> AddDirectorService(Director newDirector)
         {
             await _context.AddAsync(newDirector);
             await _context.SaveChangesAsync();
             
             return _context.Director.ToList();
+        }
+
+        public async Task<Director> UpdateDirectorService(int id, Director updateDirector)
+        {
+            Director director = _context.Director.FirstOrDefault(d=> d.Id == id);
+            director.Name = updateDirector.Name;
+            director.Age = updateDirector.Age;
+            await _context.SaveChangesAsync();
+            
+            return _context.Director.FirstOrDefault(d=> d.Id == id);
         }
     }
 }

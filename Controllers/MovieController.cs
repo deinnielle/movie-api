@@ -19,31 +19,31 @@ namespace Api.Controllers
             _movieService = movieService;
         }
         
-        [Route("/")]
+        [HttpGet("/movies")]
         public async Task<IActionResult> GetAllMovies()
         {
             return Ok(await _movieService.GetAllMoviesService());
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("/movie/{id}")]
         public async Task<IActionResult> GetMovieById(int id)
         {
             return Ok(await _movieService.GetMovieByIdService(id));
         }
         
-        [HttpPost]
+        [HttpPost("/movie/")]
         public async Task<IActionResult> AddMovie(Movie newMovie)
         {
             return Ok(await _movieService.AddMovieService(newMovie));
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("/movie/{id}")]
         public async Task<IActionResult> UpdateMovie(int id, Movie updateMovie)
         {
             return Ok(await _movieService.UpdateMovieService(id, updateMovie));
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("/movie/{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
             return Ok(await _movieService.DeleteMovieService(id));
