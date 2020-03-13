@@ -23,7 +23,7 @@ namespace Api.Services
         
         public async Task<Movie> GetMovieByIdService(int id)
         {
-            return _context.Movie.FirstOrDefault(m => m.Id == id);
+            return _context.Movie.Include(m => m.Director).FirstOrDefault(m => m.Id == id);
         }
 
         public async Task<List<Movie>> AddMovieService(Movie newMovie)

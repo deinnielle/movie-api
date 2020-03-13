@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
@@ -17,12 +18,12 @@ namespace Api.Services
 
         public async Task<List<Director>> GetAllDirectorsService()
         {
-            return _context.Director.ToList();
+            return _context.Director.Include(m => m.Movies).ToList();
         }
 
         public async Task<Director> GetDirectorByIdService(int id)
         {
-            return _context.Director.FirstOrDefault(d => d.Id == id);
+            return _context.Director.Include(m => m.Movies).FirstOrDefault(d => d.Id == id);
         }
 
         public async Task<List<Director>> AddDirectorService(Director newDirector)
