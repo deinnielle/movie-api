@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
@@ -17,12 +18,12 @@ namespace Api.Services
         
         public async Task<List<Movie>> GetAllMoviesService()
         {
-            return _context.Items.ToList();
+            return _context.Movie.Include(m => m.Director).ToList();
         }
         
         public async Task<Movie> GetMovieByIdService(int id)
         {
-            return _context.Items.FirstOrDefault(m => m.Id == id);
+            return _context.Movie.FirstOrDefault(m => m.Id == id);
         }
 
         public async Task<List<Movie>> AddMovieService(Movie newMovie)
@@ -30,23 +31,23 @@ namespace Api.Services
             await _context.AddAsync(newMovie);
             await _context.SaveChangesAsync();
             
-            return _context.Items.ToList();;
+            return _context.Movie.ToList();
         }
 
         public async Task<Movie> UpdateMovieService(int id, Movie updateMovie)
         {
-            Movie movie = _context.Items.FirstOrDefault(m => m.Id == id);
+            Movie movie = _context.Movie.FirstOrDefault(m => m.Id == id);
             movie.Title = updateMovie.Title;
             movie.Rating = updateMovie.Rating;
             movie.Genre = updateMovie.Genre;
             await _context.SaveChangesAsync();
             
-            return _context.Items.FirstOrDefault(m => m.Id == id);
+            return _context.Movie.FirstOrDefault(m => m.Id == id);
         }
         
         public async Task<Movie> DeleteMovieService(int id)
         {
-            Movie movie = _context.Items.First(m => m.Id == id);
+            Movie movie = _context.Movie.First(m => m.Id == id);
             Movie deletedMovie = movie;
             _context.Remove(movie);
             await _context.SaveChangesAsync();

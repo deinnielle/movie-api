@@ -6,5 +6,7 @@ namespace Api.Models
         public string Title { get; set; }
         public double Rating { get; set; }
         public string Genre { get; set; }
+        public int DirectorId { get; set; }
+        public Director Director { get; set; }
     }
 }
